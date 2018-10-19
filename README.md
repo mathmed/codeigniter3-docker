@@ -8,7 +8,7 @@ Primeiro faça o clone deste repositório
 $ git clone https://github.com/mathmed/base-docker-codeigniter3-mysql.git
 ```
 
-Com o repositório em sua máquina, abra o arquivo ```html .env ``` localizado na raíz.
+Com o repositório em sua máquina, abra o arquivo `.env` localizado na raíz.
 O arquivo tem a seguinte forma:
 
 `APP_NAME=base-docker-codeigniter3-mysql`  
@@ -26,15 +26,20 @@ Altere os campos `MYSQL_DATABASE`, `MYSQL_USER` e `MYSQL_PASSWORD` para as de se
 Navegue até `base-docker-codeigniter3-mysql/src/application/config` e abre o arquivo `database.php`. Altere os campos do banco de dados para os mesmos que utilizou em `.env`.
 
 Após configurados o arquivo, va até a raiz do projeto e execute  
-`$ sudo docker-compose up -d`
+```html
+$ sudo docker-compose up -d
+```
 
 Feito isso, os container de CodeIgniter3, MYSQL e phpmyadmin serão criados.
 
 ## Acessando
 
 Para acessar seu projeto digite em seu navegador  
-`http://localhost:8080`
+```html
+http://localhost:8080
+```
 
 Para acessar o phpmyadmin digite em seu navegador  
-`http://localhost:9191`
-
+```html
+http://localhost:9191
+```
