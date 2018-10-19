@@ -39,6 +39,14 @@ Para acessar seu projeto digite em seu navegador
 http://localhost:8080
 ```
 
+### Problemas com permissões
+
+Caso tenha problema de permissões de arquivos, na raíz do projeto execute
+
+```html
+$ sudo chmod -R 777 .
+```
+
 Para acessar o phpmyadmin digite em seu navegador  
 ```html
 http://localhost:9191
