@@ -50,3 +50,11 @@ Caso tenha problema de permissões de arquivos, na raíz do projeto execute
 ```html
 $ sudo chmod -R 777 .
 ```
+
+### Terminal
+
+Para executar o terminal de seu container php execute
+
+```html
+$ sudo docker exec -ti container-php sh
+```
