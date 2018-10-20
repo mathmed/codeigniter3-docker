@@ -53,7 +53,7 @@ $ sudo chmod -R 777 .
 
 ### Terminal
 
-Para executar o terminal de seu container php execute
+Para acessar o terminal de seu container php execute
 
 ```html
 $ sudo docker exec -ti container-php sh
