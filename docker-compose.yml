@@ -12,6 +12,8 @@ services:
     ports:
      - ${HTTP_PORT}:80
      - ${HTTPS_PORT}:443
+    stdin_open: true
+    tty: true
   database:
     container_name: container-database
     image: mysql:5.7

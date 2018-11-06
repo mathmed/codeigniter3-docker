@@ -43,3 +43,18 @@ Para acessar o phpmyadmin digite em seu navegador
 ```html
 http://localhost:9191
 ```
+### Problemas com permissões
+
+Caso tenha problema de permissões de arquivos, na raíz do projeto execute
+
+```html
+$ sudo chmod -R 777 .
+```
+
+### Terminal
+
+Para acessar o terminal de seu container php execute
+
+```html
+$ sudo docker exec -ti container-php sh
+```
