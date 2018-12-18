@@ -30,7 +30,7 @@ services:
         links:
             - mysqldb
     php:
-        container_name: container-php-drop
+        container_name: php
         image: nanoninja/php-fpm:${PHP_VERSION}
         restart: always
         volumes:
@@ -39,7 +39,7 @@ services:
 
     myadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: container-phpmyadmin-drop
+        container_name: phpmyadmin
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
@@ -67,6 +67,6 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         ports:
-            - "8990:3306"
+            - "8989:3306"
         volumes:
             - "./data/db/mysql:/var/lib/mysql"
