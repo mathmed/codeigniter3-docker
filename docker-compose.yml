@@ -1,49 +1,72 @@
-# I use ENV variables to name my containers and set the ports
-# to change, replate it here or in .env file
 version: '3'
 services:
-  php:
-    container_name: container-php
-    image: jlamim/php7-nginx
-    volumes:
-     - ./src:/var/www/src
-    links:
-     - database
-    ports:
-     - ${HTTP_PORT}:80
-     - ${HTTPS_PORT}:443
-    stdin_open: true
-    tty: true
-  database:
-    container_name: container-database
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-     - ./data:/var/lib/mysql
-    ports:
-     - ${MYSQL_PORT}:3306
-     
-  phpmyadmin:
-    container_name: container-phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-    - database
-    links:
-    - database
-    ports:
-    - "9191:80"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_HOST}
-      PMA_HOST: database
-volumes:
-  data:
-    driver: local
+    proxy:
+        container_name: proxy
+        image: jwilder/nginx-proxy
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+
+    app:
+        container_name: app
+        image: nginx:alpine
+        volumes:
+            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+            - "./etc/ssl:/etc/ssl"
+            - "./web:/var/www/html"
+            - "./etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
+    
+        ports:
+            - "8000:80"    
+
+        command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+        restart: always
+        depends_on:
+            - php
+            - mysqldb
+
+        links:
+            - mysqldb
+    php:
+        container_name: container-php-drop
+        image: nanoninja/php-fpm:${PHP_VERSION}
+        restart: always
+        volumes:
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./web:/var/www/html"
+
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: container-phpmyadmin-drop
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            PMA_HOST: ${MYSQL_HOST}
+        restart: always
+        depends_on:
+            - mysqldb
+        links:
+            - mysqldb
+
+        ports:
+            - "9191:80"  
+    mysqldb:
+        container_name: ${MYSQL_HOST}
+        image: mysql:${MYSQL_VERSION}
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - "8990:3306"
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"

@@ -1,5 +1,5 @@
 # base-docker-codeigniter3-mysql
-Containers configurados para projetos que utilizam Code Igniter 3 , MYSQL e phpmyadmin
+Configuração de projetos que utilizam CodeIgniter3, MySQL, Docker e Nginx
 
 ## Como usar
 
@@ -8,35 +8,23 @@ Primeiro faça o clone deste repositório
 $ git clone https://github.com/mathmed/base-docker-codeigniter3-mysql.git
 ```
 
-Com o repositório em sua máquina, abra o arquivo `.env` localizado na raíz.
-O arquivo tem a seguinte forma:
+Com o repositório em sua máquina, abra o arquivo `.env` localizado na raíz e configure-o de acordo com o seu host.
 
-`APP_NAME=base-docker-codeigniter3-mysql`  
-`MYSQL_PORT=3306`  
-`HTTP_PORT=8080`  
-`HTTPS_PORT=443`  
-`MYSQL_ROOT_PASSWORD=root`  
-`MYSQL_DATABASE=your_database_here`  
-`MYSQL_USER=your_user_here`  
-`MYSQL_PASSWORD=your_password_here`  
-`MYSQL_ROOT_HOST=%`
 
-Altere os campos `MYSQL_DATABASE`, `MYSQL_USER` e `MYSQL_PASSWORD` para as de seu banco de dados.
-
-Navegue até `base-docker-codeigniter3-mysql/src/application/config` e abre o arquivo `database.php`. Altere os campos do banco de dados para os mesmos que utilizou em `.env`.
+Navegue até `base-docker-codeigniter3-mysql/web/public/app/application/config` e abre o arquivo `database.php`. Altere os campos do banco de dados para os mesmos que utilizou em `.env`.
 
 Após configurados o arquivo, va até a raiz do projeto e execute  
 ```html
 $ sudo docker-compose up -d
 ```
 
-Feito isso, os container de CodeIgniter3, MYSQL e phpmyadmin serão criados.
+Feito isso, a aplicação está pronta para uso.
 
 ## Acessando
 
 Para acessar seu projeto digite em seu navegador  
 ```html
-http://localhost:8080
+http://localhost:8000
 ```
 
 Para acessar o phpmyadmin digite em seu navegador  
@@ -53,8 +41,8 @@ $ sudo chmod -R 777 .
 
 ### Terminal
 
-Para acessar o terminal de seu container php execute
+Para acessar o terminal de algum container digite no terminal
 
 ```html
-$ sudo docker exec -ti container-php sh
+$ sudo docker exec -ti <nome_containert> /bin/sh/
 ```
