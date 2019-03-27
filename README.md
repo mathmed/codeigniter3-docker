@@ -1,48 +1,69 @@
-# base-docker-codeigniter3-mysql
-Configuração de projetos que utilizam CodeIgniter3, MySQL, Docker e Nginx
+# codeigniter3-docker-nginx
 
-## Como usar
+Initial configuration for projects using Docker and Codeigniter 3
 
-Primeiro faça o clone deste repositório
+## What the repository has
+
+* CodeIgniter 3  
+* Docker start file
+* PHP
+* Nginx
+* Phpmyadmin
+* MySQL
+* Reverse Proxy
+
+### New layers in Code Igniter 3
+
+Code igniter 3 is modified to support two new layers, business and DAO.
+
+#### Using the layers
+
+Create a file as `Example_dao.php` or `Example_business.php` and a class with the same name inside its folder.
+Use `$this->load->dao(example_dao)` or `$this->load->business(example_business)` to load the file.
+
+## Getting start
+
+First make the clone of this repository
 ```html
 $ git clone https://github.com/mathmed/base-docker-codeigniter3-mysql.git
 ```
 
-Com o repositório em sua máquina, abra o arquivo `.env` localizado na raíz e configure-o de acordo com o seu host.
+With the repository ready, open the file `.env` located at the root and configure it according to your host.
 
 
-Navegue até `base-docker-codeigniter3-mysql/web/public/app/application/config` e abre o arquivo `database.php`. Altere os campos do banco de dados para os mesmos que utilizou em `.env`.
+Go to `codeigniter3-docker-nginx/web/public/app/application/config` and open the file `database.php`. Change the database fields for them used in the `.env` file.
 
-Após configurados o arquivo, va até a raiz do projeto e execute  
+After configuring the files, go to the root of the project and execute  
 ```html
 $ sudo docker-compose up -d
 ```
 
-Feito isso, a aplicação está pronta para uso.
+done, the application is ready for use.
 
-## Acessando
 
-Para acessar seu projeto digite em seu navegador  
+## Accessing
+
+To access your project, type in your browser  
 ```html
 http://localhost:8000
 ```
 
-Para acessar o phpmyadmin digite em seu navegador  
+To access the phpmyadmin, type in your browser  
 ```html
 http://localhost:9191
 ```
-### Problemas com permissões
+### Problems with permissions
 
-Caso tenha problema de permissões de arquivos, na raíz do projeto execute
+If you have file permissions problem, at the root of the project run
 
 ```html
 $ sudo chmod -R 777 .
 ```
 
-### Terminal
+### Container shell
 
-Para acessar o terminal de algum container digite no terminal
+To access a container shell, type in your terminal
 
 ```html
-$ sudo docker exec -ti <nome_containert> /bin/sh/
+$ sudo docker exec -ti <container_name> /bin/sh/
 ```
