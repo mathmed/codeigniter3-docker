@@ -57,7 +57,7 @@ http://localhost:9191
 If you have file permissions problem, at the root of the project run
 
 ```html
-$ sudo chmod -R 777 .
+$ sudo chmod -R 755 .
 ```
 
 ### Container shell
