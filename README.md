@@ -1,4 +1,4 @@
-# codeigniter3-docker-nginx
+# CodeIgniter3 Docker Nginx server
 
 Initial configuration for projects using Docker and Codeigniter 3
 
